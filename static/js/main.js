@@ -16,18 +16,20 @@ document.getElementById("image-upload").addEventListener("change", function(even
 document.getElementById("segment-btn").addEventListener("click", function() {
     const fileInput = document.getElementById("image-upload");
     const formData = new FormData();
-    formData.append("image", fileInput.files[0]);
+    formData.append("file", fileInput.files[0]);
 
     // Send the image to Flask backend for segmentation
-    fetch("/segment", {
+    fetch("/predict", {
         method: "POST",
         body: formData
     })
     .then(response => response.json())
     .then(data => {
-        const resultImage = document.getElementById("result-preview");
-        resultImage.src = data.segmented_image_url;  // Assuming URL of the segmented image
-        document.querySelector(".result-section").style.display = "block";
+        if (data.segmented_image) {
+            const resultImage = document.getElementById("result-preview");
+            resultImage.src = "data:image/png;base64," + data.segmented_image;  // Display the image
+            document.querySelector(".result-section").style.display = "block";
+        }
     })
     .catch(error => console.error("Error:", error));
 });
