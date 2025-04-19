@@ -105,7 +105,7 @@ body.dark-mode .upload-section h3, body.dark-mode .result-section h3, body.dark-
     margin-top: 20px;
 }
 
-#image-preview, #result-preview {
+#image-preview, #result-canvas {
     max-width: 100%;
     height: auto;
     border: 1px solid #ddd;
@@ -261,6 +261,24 @@ body.dark-mode .analysis-btn.active {
     margin-bottom: 2px;
 }
 
+.opacity-control {
+    text-align: center;
+}
+
+#opacity-slider {
+    width: 80%;
+    margin: 10px auto;
+    accent-color: #007bff;
+}
+
+body.dark-mode #opacity-slider {
+    accent-color: #60a5fa;
+}
+
+#opacity-value {
+    font-weight: bold;
+}
+
 footer {
     text-align: center;
     margin-top: 20px;
@@ -289,5 +307,9 @@ body.dark-mode footer {
     .btn, .analysis-btn {
         width: 100%;
         margin: 10px 0;
+    }
+
+    #opacity-slider {
+        width: 90%;
     }
 }
