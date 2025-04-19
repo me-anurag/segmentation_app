@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semantic Segmentation</title>
     <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        // Apply saved theme on load
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        });
+    </script>
 </head>
 <body>
 

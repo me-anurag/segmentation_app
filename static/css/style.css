@@ -15,6 +15,12 @@ body {
     height: 100vh;
 }
 
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #1f2937;
+    color: #fff;
+}
+
 /* Container */
 .container {
     text-align: center;
@@ -24,6 +30,14 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 400px;
 }
+
+/* Dark mode for container */
+body.dark-mode .container {
+    background-color: #374151;
+}
+
+/* Other styles remain the same */
+
 
 /* Header */
 header h1 {
