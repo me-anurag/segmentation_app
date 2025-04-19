@@ -2,3 +2,5 @@ Flask
 torch
 torchvision
 Pillow
+scipy
+opencv-python

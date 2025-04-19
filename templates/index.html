@@ -15,29 +15,45 @@
     </script>
 </head>
 <body>
-
     <div class="container">
         <header>
-            <h1>Semantic Segmentation with Pretrained Model</h1>
-            <p>Upload an image and perform segmentation</p>
+            <h1>Semantic Segmentation</h1>
+            <p>Upload an image to perform advanced segmentation</p>
+            <button id="themeToggle" data-tooltip="Toggle Dark/Light Mode">🌙</button>
         </header>
 
         <main>
-            <div class="upload-section">
-                <label for="image-upload" class="upload-btn">Choose an Image</label>
-                <input type="file" id="image-upload" accept="image/*" />
+            <div class="content-grid">
+                <div class="upload-section card">
+                    <h3>Upload Image</h3>
+                    <label for="image-upload" class="upload-btn" data-tooltip="Select an image file">Choose Image</label>
+                    <input type="file" id="image-upload" accept="image/*" />
+                    <div class="preview-section">
+                        <h4>Preview</h4>
+                        <img id="image-preview" src="" alt="Image preview" style="display:none;">
+                    </div>
+                    <button id="segment-btn" class="btn" style="display:none;" data-tooltip="Start segmentation">Segment Image</button>
+                    <button id="reset-btn" class="btn reset-btn" style="display:none;" data-tooltip="Clear all">Reset</button>
+                </div>
+
+                <div class="result-section card">
+                    <h3>Segmented Output</h3>
+                    <div id="result-placeholder" class="placeholder">Your segmented image will appear here</div>
+                    <div id="loader" class="spinner" style="display:none;"></div>
+                    <img id="result-preview" src="" alt="Segmented result" style="display:none;" />
+                    <a id="download-btn" class="btn" style="display:none;" href="" download="segmented_image.png" data-tooltip="Download segmented image">Download</a>
+                </div>
             </div>
 
-            <div class="preview-section">
-                <h3>Preview</h3>
-                <img id="image-preview" src="" alt="Image preview will appear here" style="display:none;">
-            </div>
-
-            <button id="segment-btn" class="btn" style="display:none;">Segment Image</button>
-
-            <div class="result-section" style="display:none;">
-                <h3>Segmented Output</h3>
-                <img id="result-preview" src="" alt="Segmented result" />
+            <div class="data-section card" style="display:none;">
+                <button id="toggle-data" class="toggle-btn" data-tooltip="Show/Hide Analysis">Toggle Analysis ▼</button>
+                <div id="data-content">
+                    <h3>Segmentation Analysis</h3>
+                    <div id="object-counts"></div>
+                    <div id="color-mapping" style="margin-top:20px;"></div>
+                    <div id="area-analysis" style="margin-top:20px;"></div>
+                    <div id="summary" style="margin-top:20px; font-weight:bold;"></div>
+                </div>
             </div>
         </main>
 
@@ -46,6 +62,7 @@
         </footer>
     </div>
 
+    <script src="/static/js/home.js"></script>
     <script src="/static/js/main.js"></script>
 </body>
 </html>
