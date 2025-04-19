@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Segmentation</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Semantic Segmentation with Pretrained Model</h1>
+            <p>Upload an image and perform segmentation</p>
+        </header>
+
+        <main>
+            <div class="upload-section">
+                <label for="image-upload" class="upload-btn">Choose an Image</label>
+                <input type="file" id="image-upload" accept="image/*" />
+            </div>
+
+            <div class="preview-section">
+                <h3>Preview</h3>
+                <img id="image-preview" src="" alt="Image preview will appear here" style="display:none;">
+            </div>
+
+            <button id="segment-btn" class="btn" style="display:none;">Segment Image</button>
+
+            <div class="result-section" style="display:none;">
+                <h3>Segmented Output</h3>
+                <img id="result-preview" src="" alt="Segmented result" />
+            </div>
+        </main>
+
+        <footer>
+            <p>Built with ❤️ by You</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
