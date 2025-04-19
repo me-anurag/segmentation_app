@@ -48,11 +48,23 @@
             <div class="data-section card" style="display:none;">
                 <button id="toggle-data" class="toggle-btn" data-tooltip="Show/Hide Analysis">Toggle Analysis ▼</button>
                 <div id="data-content">
-                    <h3>Segmentation Analysis</h3>
-                    <div id="object-counts"></div>
-                    <div id="color-mapping" style="margin-top:20px;"></div>
-                    <div id="area-analysis" style="margin-top:20px;"></div>
-                    <div id="summary" style="margin-top:20px; font-weight:bold;"></div>
+                    <div class="analysis-toggle">
+                        <button id="detailed-toggle" class="analysis-btn active" data-tooltip="Technical details">Detailed</button>
+                        <button id="novice-toggle" class="analysis-btn" data-tooltip="Simple overview">Novice</button>
+                    </div>
+                    <div id="detailed-analysis">
+                        <h3>Segmentation Analysis</h3>
+                        <div id="object-counts"></div>
+                        <div id="color-mapping" style="margin-top:20px;"></div>
+                        <div id="area-analysis" style="margin-top:20px;"></div>
+                        <div id="summary" style="margin-top:20px; font-weight:bold;"></div>
+                    </div>
+                    <div id="novice-analysis" style="display:none;">
+                        <h3>Easy Results</h3>
+                        <div id="novice-summary"></div>
+                        <div id="novice-objects" style="margin-top:20px;"></div>
+                        <div id="novice-areas" style="margin-top:20px;"></div>
+                    </div>
                 </div>
             </div>
         </main>

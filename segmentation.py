@@ -36,7 +36,7 @@ COLORS = [
     (0, 0, 0), (255, 102, 102), (102, 255, 102), (102, 102, 255), (255, 255, 102),
     (255, 102, 255), (102, 255, 255), (255, 178, 102), (178, 102, 255), (102, 178, 255),
     (255, 102, 178), (178, 255, 102), (102, 255, 178), (255, 178, 178), (178, 178, 255),
-    (255, 255, 178), (178, 255, 255), (255, 178, 255),   (178, 102, 178), (102, 178, 178),
+    (255, 255, 178), (178, 255, 255), (255, 178, 255), (178, 102, 178), (102, 178, 178),
     (178, 178, 178)
 ]
 
@@ -70,22 +70,24 @@ def segment_image(file):
         # Convert to PIL image
         segmented_image = Image.fromarray(segmentation_result)
 
-        # Calculate object counts and areas, and find centroids for labeling
+        # Calculate object counts and areas using connected components per class
         print("Attempting to label objects...")
-        labeled_array, num_features = label(output_predictions)
-        print(f"Number of features detected: {num_features}")
-
-        centroids = {}
-        for c in range(1, len(CLASSES)):
-            mask = output_predictions == c
+        for c in range(1, len(CLASSES)):  # Start from 1 to skip background
+            mask = (output_predictions == c).astype(np.uint8)
             if np.any(mask):
-                count = int(np.sum(labeled_array == c))  # Convert to Python int
-                object_counts[CLASSES[c]] = count
+                labeled_array, num_features = label(mask)
+                object_counts[CLASSES[c]] = num_features
                 area_percentages[CLASSES[c]] = (np.sum(mask) / total_pixels) * 100
+
+        # Find centroids for labeling
+        centroids = {}
+        for cls in CLASSES[1:]:  # Skip background
+            mask = (output_predictions == CLASSES.index(cls)).astype(np.uint8)
+            if np.any(mask):
                 coords = np.where(mask)
                 if coords[0].size > 0:
                     centroid = (int(np.mean(coords[1])), int(np.mean(coords[0])))
-                    centroids[CLASSES[c]] = centroid
+                    centroids[cls] = centroid
 
         # Draw labels on segmented image
         draw = ImageDraw.Draw(segmented_image)
@@ -94,8 +96,7 @@ def segment_image(file):
         except:
             font = ImageFont.load_default()
         for cls, centroid in centroids.items():
-            if cls != "background":
-                draw.text(centroid, cls, fill=(255, 255, 255), font=font, stroke_width=1, stroke_fill=(0, 0, 0))
+            draw.text(centroid, cls, fill=(255, 255, 255), font=font, stroke_width=1, stroke_fill=(0, 0, 0))
 
         # Save segmented image to base64
         buffered = BytesIO()
@@ -103,16 +104,17 @@ def segment_image(file):
         img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
         # Prepare color mapping
-        color_mapping = {cls: f"rgb{COLORS[i]}" for i, cls in enumerate(CLASSES) if cls != "background"}
+        color_mapping = {cls: f"rgb{COLORS[CLASSES.index(cls)]}" for cls in CLASSES if cls != "background"}
 
         # Prepare analysis summary
         analysis = {
             "object_counts": {k: int(v) for k, v in object_counts.items() if v > 0 and k != "background"},  # Ensure int
             "area_percentages": {k: f"{v:.2f}%" for k, v in area_percentages.items() if v > 0 and k != "background"},
             "color_mapping": color_mapping,
-            "total_objects": int(sum(v for k, v in object_counts.items() if k != "background")),  # Ensure int
+            "total_objects": int(sum(v for k, v in object_counts.items() if k != "background" and v > 0))  # Ensure int
         }
 
+        print(f"Analysis: {analysis}")
         return {"segmented_image": img_str, "analysis": analysis}
 
     except Exception as e:
