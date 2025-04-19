@@ -6,7 +6,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('home.html')  # Renders your homepage
+
+@app.route('/index')
+def index():
+    return render_template('index.html')  # Renders segmentation page
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -16,7 +20,6 @@ def predict():
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
-    # Call the segmentation function
     try:
         segmented_image = segment_image(file)
         return jsonify({'segmented_image': segmented_image})

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Image Segmentation</title>
+
+  <!-- Apply saved theme early -->
+  <script>
+    if (localStorage.getItem("theme") === "dark") {
+      document.documentElement.classList.add("dark-mode");
+    }
+  </script>
+
+  <link rel="stylesheet" href="../static/css/home.css"/>
+  <script defer src="../static/js/home.js"></script>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Semantic Segmentation Tool</div>
+    <nav>
+      <a href="#">About</a>
+      <a href="#">GitHub</a>
+      <button id="manualToggle">📘 Manual</button>
+      <button id="themeToggle">🌙</button>
+    </nav>
+    <div id="manualDropdown" class="manual-hidden">
+      <h4>How to Use</h4>
+      <ol>
+        <li>Click "Start Segmenting".</li>
+        <li>Upload your image.</li>
+        <li>Watch the AI segment objects automatically.</li>
+        <li>Download the result or make adjustments.</li>
+      </ol>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Transform Your Images with AI-Powered Segmentation</h1>
+    <p>Harness the power of deep learning to segment objects in images with precision.</p>
+    <div class="demo">
+      <img src="../static/assets/sampleBefore.jpeg" alt="Before Segmentation" class="before" />
+      <img src="../static/assets/SampleAfter.png" alt="After Segmentation" class="after" />
+    </div>
+    <!-- Link the Start Segmenting button to index.html -->
+    <a class="cta" href="{{ url_for('index') }}">Start Segmenting</a>
+  </section>
+
+  <section class="features">
+    <div class="feature-card">
+      <h3>⚡ Fast & Efficient</h3>
+      <p>Get results in seconds with optimized AI models.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🎯 High Accuracy</h3>
+      <p>Cutting-edge object detection with deep learning.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🖥 User-Friendly</h3>
+      <p>No experience needed—just upload and go.</p>
+    </div>
+  </section>
+
+  <section class="explanation">
+    <h2>What is Semantic Segmentation?</h2>
+    <p>
+      Semantic segmentation is the process of labeling each pixel in an image with a class. This allows AI to understand and separate different objects like people, vehicles, and backgrounds.
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 SegmentAI. All rights reserved.</p>
+    <div>
+      <a href="#">About</a>
+      <a href="#">GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>
