@@ -26,7 +26,10 @@
             <div class="content-grid">
                 <div class="upload-section card">
                     <h3>Upload Image</h3>
-                    <label for="image-upload" class="upload-btn" data-tooltip="Select an image file">Choose Image</label>
+                    <div class="upload-buttons">
+                        <label for="image-upload" class="upload-btn" data-tooltip="Select an image file">Choose Image</label>
+                        <button id="capture-btn" class="upload-btn" data-tooltip="Capture an image with camera">Capture Image</button>
+                    </div>
                     <input type="file" id="image-upload" accept="image/*" />
                     <div class="preview-section">
                         <h4>Preview</h4>
@@ -71,6 +74,19 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Camera Modal -->
+            <div id="camera-modal" class="camera-modal" style="display:none;">
+                <div class="camera-modal-content">
+                    <h3>Capture Image</h3>
+                    <video id="camera-feed" autoplay style="width:100%; max-width:640px; height:auto;"></video>
+                    <canvas id="capture-canvas" style="display:none;"></canvas>
+                    <div class="camera-controls">
+                        <button id="capture-snap-btn" class="btn" data-tooltip="Take photo">Capture</button>
+                        <button id="capture-cancel-btn" class="btn reset-btn" data-tooltip="Cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <footer>
@@ -80,5 +96,6 @@
 
     <script src="/static/js/home.js"></script>
     <script src="/static/js/main.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9337d036bb2d1377',t:'MTc0NTE4NTM2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>

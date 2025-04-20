@@ -5,17 +5,81 @@ document.getElementById("image-upload").addEventListener("change", function(even
             alert("File size exceeds 5MB limit.");
             return;
         }
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const img = document.getElementById("image-preview");
-            img.src = e.target.result;
-            img.style.display = "block";
-            document.getElementById("segment-btn").style.display = "inline-block";
-            document.getElementById("reset-btn").style.display = "inline-block";
-        };
-        reader.readAsDataURL(file);
+        displayImagePreview(file);
     }
 });
+
+// Handle capture button click
+document.getElementById("capture-btn").addEventListener("click", async function() {
+    const modal = document.getElementById("camera-modal");
+    const video = document.getElementById("camera-feed");
+    modal.style.display = "block";
+
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        video.stream = stream; // Store stream for cleanup
+    } catch (err) {
+        console.error("Error accessing camera:", err);
+        alert("Could not access camera: " + err.message);
+        closeCameraModal();
+    }
+});
+
+// Handle capture snap button
+document.getElementById("capture-snap-btn").addEventListener("click", function() {
+    const video = document.getElementById("camera-feed");
+    const canvas = document.getElementById("capture-canvas");
+    const context = canvas.getContext("2d");
+
+    // Set canvas size to video dimensions
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    // Draw video frame to canvas
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // Convert canvas to blob
+    canvas.toBlob(function(blob) {
+        const file = new File([blob], "captured_image.png", { type: "image/png" });
+        displayImagePreview(file);
+        closeCameraModal();
+    }, "image/png");
+});
+
+// Handle cancel button
+document.getElementById("capture-cancel-btn").addEventListener("click", function() {
+    closeCameraModal();
+});
+
+// Function to display image preview
+function displayImagePreview(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = document.getElementById("image-preview");
+        img.src = e.target.result;
+        img.style.display = "block";
+        document.getElementById("segment-btn").style.display = "inline-block";
+        document.getElementById("reset-btn").style.display = "inline-block";
+        // Update file input with captured file
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        document.getElementById("image-upload").files = dataTransfer.files;
+    };
+    reader.readAsDataURL(file);
+}
+
+// Function to close camera modal and stop stream
+function closeCameraModal() {
+    const modal = document.getElementById("camera-modal");
+    const video = document.getElementById("camera-feed");
+    if (video.stream) {
+        video.stream.getTracks().forEach(track => track.stop());
+        video.srcObject = null;
+        video.stream = null;
+    }
+    modal.style.display = "none";
+}
 
 document.getElementById("segment-btn").addEventListener("click", function() {
     const fileInput = document.getElementById("image-upload");
